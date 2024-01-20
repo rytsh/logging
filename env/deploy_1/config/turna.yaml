@@ -1,0 +1,14 @@
+log_level: debug
+server:
+  entrypoints:
+    web:
+      address: ":8080"
+  http:
+    middlewares:
+      print:
+        print: {}
+    routers:
+      print:
+        path: /*
+        middlewares:
+          - print
