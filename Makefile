@@ -12,6 +12,11 @@ env-swarm: export PROJECT_NAME ?= deploy_1
 env-swarm: edit-compose ## Create swarm environment
 	docker stack deploy --prune -c env/$(PROJECT_NAME)/_compose.yaml $(PROJECT_NAME)
 
+.PHONY: env-swarm-down
+env-swarm-down: export PROJECT_NAME ?= deploy_1
+env-swarm-down: ## Destroy swarm environment
+	docker stack rm $(PROJECT_NAME)
+
 .PHONY: env
 env: export PROJECT_NAME ?= deploy_1
 env: edit-compose ## Create environment
