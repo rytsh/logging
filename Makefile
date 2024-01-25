@@ -1,30 +1,30 @@
 .DEFAULT_GOAL := help
 
-.PHONY: deploy_1
-deploy_1: export PROJECT_NAME ?= deploy_1
+.PHONY: stack
+stack:
+	@if [ -z "$(PROJECT_NAME)" ]; then \
+		echo "PROJECT_NAME is not set"; \
+		exit 1; \
+	fi
 
 .PHONY: edit-compose
-edit-compose: ## Edit compose file
+edit-compose: stack ## Edit compose file
 	mugo -d '{"COMPOSE_PATH": "$(PWD)/env/$(PROJECT_NAME)"}' -o env/$(PROJECT_NAME)/_compose.yaml env/$(PROJECT_NAME)/compose.yaml
 
 .PHONY: env-swarm
-env-swarm: export PROJECT_NAME ?= deploy_1
-env-swarm: edit-compose ## Create swarm environment
+env-swarm: stack edit-compose ## Create swarm environment
 	docker stack deploy --prune -c env/$(PROJECT_NAME)/_compose.yaml $(PROJECT_NAME)
 
 .PHONY: env-swarm-down
-env-swarm-down: export PROJECT_NAME ?= deploy_1
-env-swarm-down: ## Destroy swarm environment
+env-swarm-down: stack ## Destroy swarm environment
 	docker stack rm $(PROJECT_NAME)
 
 .PHONY: env
-env: export PROJECT_NAME ?= deploy_1
-env: edit-compose ## Create environment
+env: stack edit-compose ## Create environment
 	docker compose -p $(PROJECT_NAME) -f env/$(PROJECT_NAME)/compose.yaml up -d
 
 .PHONY: env-down
-env-down: export PROJECT_NAME ?= deploy_1
-env-down: ## Destroy environment
+env-down: stack ## Destroy environment
 	docker compose -p $(PROJECT_NAME) down
 
 .PHONY: help

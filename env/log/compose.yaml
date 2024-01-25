@@ -4,14 +4,6 @@ networks:
   log:
 
 services:
-  # vector:
-  #   image: timberio/vector:0.35.0-debian
-  #   volumes:
-  #     - '{{.COMPOSE_PATH}}/config/vector.yaml:/etc/vector/vector.yaml:ro'
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #   networks:
-  #     - log
-
   promtail:
     image: grafana/promtail:1.4.1
     volumes:
@@ -58,10 +50,3 @@ services:
       - "3000:3000"
     networks:
       - log
-
-  print:
-    image: turna:test
-    volumes:
-      - '{{.COMPOSE_PATH}}/config/turna.yaml:/turna.yaml:ro'
-    ports:
-      - "8080:8080"
