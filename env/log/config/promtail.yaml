@@ -28,8 +28,8 @@ scrape_configs:
         compose_project: attrs."com.docker.compose.project"
         compose_service: attrs."com.docker.compose.service"
         stack_name: attrs."com.docker.stack.namespace"
-        swarm_service_name: attrs."com.docker.swarm.service.name"
-        swarm_task_name: attrs."com.docker.swarm.task.name"
+        service_name: attrs."com.docker.swarm.service.name"
+        task_name: attrs."com.docker.swarm.task.name"
   - regex:
       expression: "^/var/lib/docker/containers/(?P<container_id>.{12}).+/.+-json.log$"
       source: filename
