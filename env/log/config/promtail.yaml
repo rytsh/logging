@@ -43,7 +43,7 @@ scrape_configs:
       compose_project:
       compose_service:
       stack_name:
-      swarm_service_name:
-      swarm_task_name:
+      service_name:
+      task_name:
   - output:
       source: log
